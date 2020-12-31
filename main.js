@@ -27,11 +27,26 @@ const pAequorFactory = (specimenNum, dna) => {
       }
       this.dna[index] = newBase;
     },
+    complementStrand() {
+      return this.dna.map(base => {
+        switch (base) {
+          case 'A':
+            return 'T';
+          case 'T':
+            return 'A';
+          case 'C':
+            return 'G';
+          case 'G':
+            return 'C';
+        }
+      });
+    },
     compareDNA(pAequor) {
       let common = this.dna.reduce((accumulator, currentValue, index) =>
         (currentValue === pAequor.dna[index]) ? ++accumulator : accumulator, 0);
       let percentage = (common / this.dna.length) * 100;
       console.log(`specimen #${this.specimenNum} and specimen #${pAequor.specimenNum} have ${percentage}% DNA in common`);
+      return percentage;
     },
     willLikelySurvive() {
       let cgCount = this.dna.reduce((accumulator, currentBase) =>
@@ -53,9 +68,24 @@ while (survivableInstances.length < 30) {
   survivableInstances.push(instance);
 }
 
-survivableInstances.forEach((instance, index) => {
-  if (index > 0) {
-    survivableInstances[0].compareDNA(instance);
-  }
-});
+// Find the two most related instances
+let instanceA;
+let instanceB;
+let relation;
 
+survivableInstances.forEach(item1 => survivableInstances.forEach(item2 => {
+  if (item1 === item2) {
+    return;
+  }
+  let currentRelation = item1.compareDNA(item2);
+  if (!relation || relation < currentRelation) {
+    instanceA = item1;
+    instanceB = item2;
+    relation = currentRelation;
+  }
+}));
+
+console.log(`\nThe two most related specimens are #${instanceA.specimenNum} and #${instanceB.specimenNum} with ${relation}% of DNA in common.
+The DNA strands and their complementary strands are:
+#${instanceA.specimenNum}: ${instanceA.dna} #${instanceB.specimenNum}: ${instanceB.dna}
+#${instanceA.specimenNum}: ${instanceA.complementStrand()} #${instanceB.specimenNum}: ${instanceB.complementStrand()}`);
