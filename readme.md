@@ -1,7 +1,5 @@
 # Exercise project: DNA Calculator
 
-This is a solution to the CodeCademy challenge project 'Mysterious Organism'. Takes no input, but only prints the computation results to the console.
-
 ## Table of contents
 
 * [General info](#general-info)
@@ -9,6 +7,8 @@ This is a solution to the CodeCademy challenge project 'Mysterious Organism'. Ta
 * [Setup](#setup)
 
 ## General info
+
+This is a solution to the CodeCademy challenge project 'Mysterious Organism'. Takes no input, but only prints the computation results to the console.
 
 ## Technologies
 
